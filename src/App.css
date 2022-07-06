@@ -1,5 +1,16 @@
+/*@import "~@coreui/coreui/scss/coreui.scss";*/
+
 .App {
   text-align: center;
+}
+
+
+.app {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -26,6 +37,46 @@
 
 .App-link {
   color: #61dafb;
+}
+
+form{
+  padding: 30px 60px;
+  border-radius: 10px;
+  align-content: center;
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  border: gray;
+
+}
+
+button{
+  width: 100%;
+  height: 50%;
+  padding: 10px;
+  border: none;
+  background-color: #9fafca;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+TextInput{
+  display: flex;
+  flex-direction: column;
+
+}
+
+label, TextInput {
+  display: block;
+}
+
+label {
+
+  margin-bottom: 20px;
 }
 
 @keyframes App-logo-spin {
