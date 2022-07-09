@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+let Profile = {
+    name:"steve",
+    id:"1"
+}
+
 function Navbar() {
     const classes = useStyles();
 
@@ -38,6 +44,10 @@ function Navbar() {
                 <div className={classes.navlinks}>
                     <Link to="/transactions" className={classes.link}>
                         Transactions
+                    </Link>
+
+                    <Link to="#" className={classes.link}>
+                        {Profile.name}
                     </Link>
 
                 </div>

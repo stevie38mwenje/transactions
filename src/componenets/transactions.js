@@ -1,15 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
-import LaunchIcon from "@material-ui/icons/Launch";
-import IconButton from "@material-ui/core/IconButton";
 import Table from "./Table";
-import { CTooltip } from "@coreui/react";
 import { errorNotification } from "./notification";
 
 import { utils } from "../utils/utility";
 import DateRange from "../utils/range";
-import {getAllTransactions} from "./interface";
+import {getTransactions, getUserTransactions} from "./interface";
 
 export function Transactions(props) {
   const history = useHistory();
@@ -20,54 +17,59 @@ export function Transactions(props) {
     to: "",
   });
 
+
+  // useEffect(() => {
+  //   const showTransaction = async () => {
+  //     setIsLoading(true);
+  //     const payload = {
+  //       date_from: format(new Date(state.from), "YYYY-MM-DD"),
+  //       date_to: format(new Date(state.to), "YYYY-MM-DD"),
+  //     };
+  //     try {
+  //       let transactionsRes = await getAllTransactions(payload);
+  //       if (transactionsRes) {
+  //         setIsLoading(false);
+  //         transactionsRes = utils.insertSerialNumberId(transactionsRes);
+  //         setTransactions(transactionsRes);
+  //       }
+  //     } catch (error) {
+  //       errorNotification("Error processing request");
+  //     }
+  //   };
+  //   showTransaction();
+  // }, [state]);
+
+
+  let Profile = {
+    name:"steve",
+    id:"1"
+  }
+
   useEffect(() => {
-    const showTransaction = async () => {
+    const showEmployee = async () => {
       setIsLoading(true);
-      const payload = {
-        date_from: format(new Date(state.from), "YYYY-MM-DD"),
-        date_to: format(new Date(state.to), "YYYY-MM-DD"),
-      };
       try {
-        let transactionsRes = await getAllTransactions(payload);
-        if (transactionsRes) {
+        let transactionResponse = await getUserTransactions(Profile.id);
+        console.log("TRANSACTION DATA...", transactionResponse )
+        if (transactionResponse) {
           setIsLoading(false);
-          transactionsRes = utils.insertSerialNumberId(transactionsRes);
-          setTransactions(transactionsRes);
+          transactionResponse = utils.insertSerialNumberId(transactionResponse);
+          setTransactions(transactionResponse);
         }
       } catch (error) {
-        errorNotification("Error processing request");
+        errorNotification('Error processing request');
       }
     };
-    showTransaction();
-  }, [state]);
+    showEmployee();
+  },[]);
 
   const fields = [
     { key: "_id", label: "ID" },
     { key: "name", label: "name" },
     { key: "amount" },
     { key: "date", label: "Date", _style: { width: "20%" } },
-    { key: "action", label: "Action" },
   ];
 
-  const handleView = (item) => {
-    const data = JSON.stringify(item);
-    history.push({
-      pathname: `/transaction/${item.id}`,
-      state: data,
-    });
-  };
-
-  const scopedSlots = {
-    action: (item) => (
-      <td>
-        <CTooltip content="View Transaction" placement="bottom">
-          <IconButton onClick={() => handleView(item)}>
-            <LaunchIcon />
-          </IconButton>
-        </CTooltip>
-      </td>
-    ),
-  };
 
   return (
     <Fragment>
@@ -85,14 +87,12 @@ export function Transactions(props) {
                   state={state}
                   setState={setState}
                 />
-                {/*<DownloadWidget data={transactions} />*/}
               </div>
             </div>
 
             <Table
-              items={transactions}
-              fields={fields}
-              scopedSlots={scopedSlots}
+                items={transactions}
+                fields={fields}
               loading={isLoading}
             />
           </div>
