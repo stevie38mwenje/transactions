@@ -1,6 +1,3 @@
-// import {
-//   login,
-// } from "../../../src/config.json";
 
 import { utils } from "../utils/utility";
 

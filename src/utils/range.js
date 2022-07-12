@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+
 import {formatDate, parseDate} from 'react-day-picker/moment';
 
 const DateRange = ({ label, state, setState }) => {
